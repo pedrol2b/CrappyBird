@@ -1,24 +1,40 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-	<meta content="Flappy Bird,game,Crappy Bird,clone,javascript,html5 game,mobile,canvas,flappy bird source" name="keywords"/>
-	<meta name="description" content="Clone of Flappy bird game in javascript using canvas 2d">
-    <meta name="viewport" content="width=device-width, 
-    user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      content="Flappy Bird,game,Crappy Bird,clone,javascript,html5 game,mobile,canvas,flappy bird source"
+      name="keywords"
+    />
+    <meta
+      name="description"
+      content="Clone of Flappy bird game in javascript using canvas 2d"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width,
+    user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
 
-        <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/styles.css" />
+  </head>
 
-</head>
-
-<body>
-
+  <body>
     <canvas></canvas>
-        <script src="src/js/game.js"></script>
-
-</body>
-
+    <script src="src/js/game/polyfill.js"></script>
+    <script src="src/js/game/audio.js"></script>
+    <script src="src/js/game/storage.js"></script>
+    <script src="src/js/game/core.js"></script>
+    <script src="src/js/game/draw.js"></script>
+    <script src="src/js/game/input.js"></script>
+    <script src="src/js/game/entities.js"></script>
+    <script src="src/js/game/collision.js"></script>
+    <script src="src/js/game/states.js"></script>
+    <script src="src/js/game/boot.js"></script>
+  </body>
 </html>

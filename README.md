@@ -7,7 +7,8 @@ Project structure
 ----
 
 - `index.html`: App entry point (minimal HTML shell)
-- `src/js/game.js`: Game logic
+- `src/js/game/`: Game logic split by concern (`core`, `states`, `entities`, `audio`, etc.)
+- `src/js/game.js`: Legacy entry placeholder
 - `src/css/styles.css`: Page styles
 - `assets/images/`: Image assets
 - `assets/audio/`: Audio assets
