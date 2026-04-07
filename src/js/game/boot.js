@@ -1,2 +1,2 @@
-        window.addEventListener('load', FB.init, false);
-        window.addEventListener('resize', FB.resize, false);
+window.addEventListener("load", FB.init, false);
+window.addEventListener("resize", FB.resize, false);

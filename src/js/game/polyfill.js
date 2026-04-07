@@ -1,22 +1,23 @@
 /*
 		   =================================================================
 			script: CrappyBird
-			author: Varun Pant  
+			author: Varun Pant
 			date: April 6, 2014
-			site: http://www.varunpant.com			 	 
+			site: http://www.varunpant.com
 		   =================================================================
 		*/
 
-
-        // http://paulirish.com/2011/requestanimationframe-for-smart-animating
-         // shim layer with setTimeout fallback
-        window.requestAnimFrame = (function () {
-            return window.requestAnimationFrame ||
-                window.webkitRequestAnimationFrame ||
-                window.mozRequestAnimationFrame ||
-                window.oRequestAnimationFrame ||
-                window.msRequestAnimationFrame ||
-                function (callback) {
-                    window.setTimeout(callback, 1000 / 60);
-            };
-        })();
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating
+// shim layer with setTimeout fallback
+window.requestAnimFrame = (function () {
+  return (
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60);
+    }
+  );
+})();
