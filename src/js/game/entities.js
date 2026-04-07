@@ -1,4 +1,4 @@
-        FB.Cloud = function (x, y) {
+        FB.Entities.Cloud = function (x, y) {
 
             this.x = x;
             this.y = y;
@@ -42,7 +42,7 @@
 
         };
 
-        FB.BottomBar = function (x, y, r) {
+        FB.Entities.BottomBar = function (x, y, r) {
 
             this.x = x;
             this.y = y
@@ -71,7 +71,7 @@
 
         }
 
-        FB.Tree = function (x, y) {
+        FB.Entities.Tree = function (x, y) {
 
             this.x = x;
             this.y = y
@@ -104,7 +104,7 @@
 
         }
 
-        FB.Pipe = function (x, w) {
+        FB.Entities.Pipe = function (x, w) {
 
             this.centerX = x;
             this.coin = true
@@ -144,7 +144,7 @@
             this.centerY = this.randomIntFromInterval(70, 220);
         }
 
-        FB.Bird = function () {
+        FB.Entities.Bird = function () {
 
             this.img = new Image();
             this.img.src = 'assets/images/bird.png';
@@ -182,7 +182,7 @@
                 }
                 if (FB.Input.tapped) {
                     this.play = true;
-                    play_sound(soundJump);
+                    FB.Audio.play(FB.Audio.sounds.jump);
                     this.velocity = this.jump;
                 }
             };
@@ -194,7 +194,7 @@
 
         }
 
-        FB.Particle = function (x, y, r, col, type) {
+        FB.Entities.Particle = function (x, y, r, col, type) {
 
             this.x = x;
             this.y = y;

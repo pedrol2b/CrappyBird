@@ -1,28 +1,28 @@
-		window.Splash = function(){
+		FB.States.Splash = function () {
 			
 			this.banner = new Image();
 			this.banner.src = "assets/images/splash.png";
 			
-			this.init = function(){
-				play_sound(soundSwoosh);
+			this.init = function () {
+				FB.Audio.play(FB.Audio.sounds.swoosh);
 				FB.distance = 0;
                 FB.bg_grad = "day";
                 FB.entities = [];
 				FB.score.taps = FB.score.coins = 0;
                 //Add entities
-                FB.entities.push(new FB.Cloud(30, ~~ (Math.random() * FB.HEIGHT / 2)));
-                FB.entities.push(new FB.Cloud(130, ~~ (Math.random() * FB.HEIGHT / 2)));
-                FB.entities.push(new FB.Cloud(230, ~~ (Math.random() * FB.HEIGHT / 2)));
-                for (i = 0; i < 2; i += 1) {
-                    FB.entities.push(new FB.BottomBar(FB.WIDTH * i, FB.HEIGHT - 100, FB.WIDTH));
+                FB.entities.push(new FB.Entities.Cloud(30, ~~ (Math.random() * FB.HEIGHT / 2)));
+                FB.entities.push(new FB.Entities.Cloud(130, ~~ (Math.random() * FB.HEIGHT / 2)));
+                FB.entities.push(new FB.Entities.Cloud(230, ~~ (Math.random() * FB.HEIGHT / 2)));
+                for (var i = 0; i < 2; i += 1) {
+                    FB.entities.push(new FB.Entities.BottomBar(FB.WIDTH * i, FB.HEIGHT - 100, FB.WIDTH));
                 }
-                FB.entities.push(new FB.Tree(~~(Math.random() * FB.WIDTH), FB.HEIGHT - 160));
-                FB.entities.push(new FB.Tree(~~(Math.random() * FB.WIDTH + 50), FB.HEIGHT - 160));
-                FB.entities.push(new FB.Tree(~~(Math.random() * FB.WIDTH + 100), FB.HEIGHT - 160));
+				FB.entities.push(new FB.Entities.Tree(~~(Math.random() * FB.WIDTH), FB.HEIGHT - 160));
+				FB.entities.push(new FB.Entities.Tree(~~(Math.random() * FB.WIDTH + 50), FB.HEIGHT - 160));
+				FB.entities.push(new FB.Entities.Tree(~~(Math.random() * FB.WIDTH + 100), FB.HEIGHT - 160));
 			}
 			
-			this.update = function(){
-				for (i = 0; i < FB.entities.length; i += 1) {
+			this.update = function () {
+				for (var i = 0; i < FB.entities.length; i += 1) {
                     FB.entities[i].update();                    
                 }
 				if (FB.Input.tapped) {
@@ -31,24 +31,24 @@
 				}
 			}
 			
-			this.render = function(){
+			this.render = function () {
 				FB.Draw.Image(this.banner,66,100);
 			}
 		
-		}
+		};
 		
-		window.Play = function(){
+		FB.States.Play = function () {
 			
-			this.init = function(){			
+			this.init = function () {
 				 
                 
-                FB.entities.push(new FB.Pipe(FB.WIDTH * 2, 50));
-                FB.entities.push(new FB.Pipe(FB.WIDTH * 2 + FB.WIDTH / 2, 50));
-                FB.entities.push(new FB.Pipe(FB.WIDTH * 3, 50));
+                FB.entities.push(new FB.Entities.Pipe(FB.WIDTH * 2, 50));
+                FB.entities.push(new FB.Entities.Pipe(FB.WIDTH * 2 + FB.WIDTH / 2, 50));
+                FB.entities.push(new FB.Entities.Pipe(FB.WIDTH * 3, 50));
 
-                FB.bird = new FB.Bird();
+				FB.bird = new FB.Entities.Bird();
                 FB.entities.push(FB.bird);
-				for(var n=0;n<10;n++){
+				for (var n = 0; n < 10; n++) {
 					var img = new Image();
 					img.src = "assets/images/font_small_" + n +'.png';
 					FB.fonts.push(img);
@@ -76,31 +76,20 @@
                 }
 
 
-                var checkCollision = false; // we only need to check for a collision
-                // if the user tapped on this game tick
-
-
-
-
                 // if the user has tapped the screen
                 if (FB.Input.tapped) {
                     // keep track of taps; needed to 
                     // calculate accuracy
                     FB.score.taps += 1;
-
-                    // set tapped back to false           
-                    // in the next cycle
-
-                    checkCollision = true;
                 }
 
                 // cycle through all entities and update as necessary
-                for (i = 0; i < FB.entities.length; i += 1) {
+                for (var i = 0; i < FB.entities.length; i += 1) {
                     FB.entities[i].update();
                     if (FB.entities[i].type === 'pipe') {
                         var hit = FB.Collides(FB.bird, FB.entities[i]);
                         if (hit) {
-                            play_sound(soundHit);
+							FB.Audio.play(FB.Audio.sounds.hit);
 							FB.changeState('GameOver');
 							 break;
                         }
@@ -108,23 +97,23 @@
                 }
 			}
 			
-			this.render = function() { 
+			this.render = function () {
 				//score				
 				var X = (FB.WIDTH/2-(FB.digits.length*14)/2);				
-				for(var i = 0; i < FB.digits.length; i++)
+				for (var i = 0; i < FB.digits.length; i++)
 				{
 				  FB.Draw.Image(FB.fonts[Number(FB.digits[i])],X+(i*14),10);
 				}
 			}
 		
-		}
+		};
 		
-		window.GameOver = function(){
+		FB.States.GameOver = function () {
 			
 			this.getMedal = function()
 			{
 			   var score = FB.score.coins;
-			   console.log(score)
+			   var medal = "bronze";
 			   if(score <= 10)
 				  medal = "bronze";
 			   if(score >= 20)
@@ -137,19 +126,19 @@
 				return medal;
 			}
 			this.getHighScore = function(){
-				var savedscore = getCookie("highscore");
+				var savedscore = FB.Storage.getCookie("highscore");
 			    if(savedscore != ""){
 					var hs = parseInt(savedscore) || 0;
 					if(hs < FB.score.coins)
 					{
 					 hs = FB.score.coins
-					 setCookie("highscore", hs, 999);
+					 FB.Storage.setCookie("highscore", hs, 999);
 					}
 					return hs;
 				  }
 				  else
 				  {					 
-					setCookie("highscore", FB.score.coins, 999);
+					FB.Storage.setCookie("highscore", FB.score.coins, 999);
 					return  FB.score.coins;
 				  }
 			}
@@ -157,7 +146,7 @@
 						
 			    var that = this;
 				setTimeout(function() {
-					play_sound(soundDie);
+					FB.Audio.play(FB.Audio.sounds.die);
 					that.banner = new Image();
 					that.banner.src = "assets/images/scoreboard.png";
 					var m = that.getMedal();
@@ -170,7 +159,7 @@
 				
 			}
 			
-			this.update = function(){				
+			this.update = function () {				
 				if (FB.Input.tapped) {
 					var x = FB.Input.x;
 					var y = FB.Input.y;
@@ -183,7 +172,7 @@
 				FB.bird.update();
 			}
 			
-			this.render = function(){
+			this.render = function () {
 				if(this.banner){
 					FB.Draw.Image(this.banner,42,70);
 					FB.Draw.Image(this.medal,75,183);
@@ -193,4 +182,4 @@
 				}
 			}
 		
-		}
+		};

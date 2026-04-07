@@ -9,7 +9,7 @@
                 pipe.coin = false;
                 FB.score.coins += 1;
 				FB.digits = FB.score.coins.toString().split('');
-                play_sound(soundScore);
+                FB.Audio.play(FB.Audio.sounds.score);
             }
 
             var bx1 = bird.vx - bird.width / 2;

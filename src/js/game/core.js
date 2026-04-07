@@ -36,6 +36,10 @@
             android: null,
             ios: null,
             gradients: {},
+            Audio: {},
+            Storage: {},
+            Entities: {},
+            States: {},
             init: function () {
                 var grad;
                 // the proportion of width to height
@@ -167,7 +171,7 @@
                 FB.Draw.rect(0, 0, FB.WIDTH, FB.HEIGHT, FB.gradients[FB.bg_grad]);
 				 
                 // cycle through all entities and render to canvas
-                for (i = 0; i < FB.entities.length; i += 1) {
+                for (var i = 0; i < FB.entities.length; i += 1) {
                     FB.entities[i].render();
                 }
 					
@@ -186,8 +190,8 @@
                 FB.update();
                 FB.render();
             },
-			changeState: function(state) {    				 
-				FB.game = new window[state]();
+			changeState: function(state) {
+				FB.game = new FB.States[state]();
 				FB.game.init();
 			}
         };
