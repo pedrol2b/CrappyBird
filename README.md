@@ -3,6 +3,16 @@ CrappyBird
 
 Clone of Flappy Bird game in JavaScript and Canvas 2D
 
+Project structure
+----
+
+- `index.html`: App entry point (minimal HTML shell)
+- `src/js/game.js`: Game logic
+- `src/css/styles.css`: Page styles
+- `assets/images/`: Image assets
+- `assets/audio/`: Audio assets
+- `docs/screenshots/`: Project screenshots
+
 
 The MIT License
 ----
@@ -16,11 +26,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **Here are some screen shots**
 
-![Heat map classic theme](https://github.com/varunpant/CrappyBird/blob/master/SS1.PNG?raw=true=50x20)
-![Heat map classic theme](https://github.com/varunpant/CrappyBird/blob/master/SS2.PNG?raw=true=50x20)
+![CrappyBird screenshot 1](docs/screenshots/SS1.PNG)
+![CrappyBird screenshot 2](docs/screenshots/SS2.PNG)
 
-![Heat map classic theme](https://github.com/varunpant/CrappyBird/blob/master/SS3.PNG?raw=true=50x20)
-![Heat map classic theme](https://github.com/varunpant/CrappyBird/blob/master/SS4.PNG?raw=true=50x20)
+![CrappyBird screenshot 3](docs/screenshots/SS3.PNG)
+![CrappyBird screenshot 4](docs/screenshots/SS4.PNG)
 
 
 Play it [here](http://varunpant.com/resources/CrappyBird/index.html)
