@@ -219,3 +219,6 @@ pip-log.txt
 
 # macOS Finder metadata (including nested folders)
 **/.DS_Store
+
+# Generated static analysis reports
+docs/visualizations/plato-report/
