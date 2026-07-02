@@ -51,4 +51,10 @@ FB.Draw = {
     FB.ctx.fillStyle = col;
     FB.ctx.fillText(string, x, y);
   },
+
+  centerText: function (string, x, y, size, col) {
+    FB.ctx.font = "bold " + size + "px Monospace";
+    FB.ctx.fillStyle = col;
+    FB.ctx.fillText(string, x - FB.ctx.measureText(string).width / 2, y);
+  },
 };

@@ -22,10 +22,16 @@ var FB = {
   distance: 0,
   digits: [],
   fonts: [],
+  paused: false,
+  pauseReason: null,
+  resuming: false,
+  resumeCountdownSeconds: 3,
+  resumeStartedAt: null,
   // we'll set the rest of these in the init function
   RATIO: null,
   bg_grad: "day",
   game: null,
+  currentState: null,
   ua: null,
   android: null,
   ios: null,
@@ -122,6 +128,36 @@ var FB = {
       false,
     );
 
+    window.addEventListener(
+      "keydown",
+      function (e) {
+        var key = e.key || e.keyCode;
+        if (key === "p" || key === "P" || key === "Escape" || key === 27) {
+          e.preventDefault();
+          FB.togglePause();
+        }
+      },
+      false,
+    );
+
+    window.addEventListener(
+      "blur",
+      function () {
+        FB.pause("focus");
+      },
+      false,
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      function () {
+        if (document.hidden) {
+          FB.pause("focus");
+        }
+      },
+      false,
+    );
+
     // we're ready to resize
     FB.resize();
     FB.changeState("Splash");
@@ -160,6 +196,22 @@ var FB = {
 
   // this is where all entities will be moved and checked for collisions etc
   update: function () {
+    if (FB.resuming) {
+      if (
+        new Date().getTime() - FB.resumeStartedAt >=
+        FB.resumeCountdownSeconds * 1000
+      ) {
+        FB.finishResumeCountdown();
+      }
+      FB.Input.tapped = false;
+      return;
+    }
+
+    if (FB.paused) {
+      FB.Input.tapped = false;
+      return;
+    }
+
     FB.game.update();
     FB.Input.tapped = false;
   },
@@ -174,6 +226,7 @@ var FB = {
     }
 
     FB.game.render();
+    FB.renderPauseOverlay();
   },
 
   // the actual loop requests animation frame then proceeds to update and render
@@ -184,7 +237,86 @@ var FB = {
   },
 
   changeState: function (state) {
+    FB.clearPause();
+    FB.currentState = state;
     FB.game = new FB.States[state]();
     FB.game.init();
+  },
+
+  pause: function (reason) {
+    if (FB.currentState !== "Play") {
+      return;
+    }
+
+    FB.paused = true;
+    FB.pauseReason = reason || "manual";
+    FB.resuming = false;
+    FB.resumeStartedAt = null;
+  },
+
+  clearPause: function () {
+    FB.paused = false;
+    FB.pauseReason = null;
+    FB.resuming = false;
+    FB.resumeStartedAt = null;
+  },
+
+  togglePause: function () {
+    if (FB.currentState !== "Play") {
+      return;
+    }
+
+    if (FB.resuming) {
+      FB.pause("manual");
+      return;
+    }
+
+    if (FB.paused) {
+      FB.startResumeCountdown();
+      return;
+    }
+
+    FB.pause("manual");
+  },
+
+  startResumeCountdown: function () {
+    if (FB.currentState !== "Play" || !FB.paused) {
+      return;
+    }
+
+    FB.resuming = true;
+    FB.resumeStartedAt = new Date().getTime();
+  },
+
+  finishResumeCountdown: function () {
+    FB.clearPause();
+  },
+
+  getResumeCountdown: function () {
+    var elapsed = new Date().getTime() - FB.resumeStartedAt;
+    var remaining = FB.resumeCountdownSeconds - elapsed / 1000;
+    return Math.max(1, Math.ceil(remaining));
+  },
+
+  renderPauseOverlay: function () {
+    if (!FB.paused && !FB.resuming) {
+      return;
+    }
+
+    FB.Draw.rect(0, 0, FB.WIDTH, FB.HEIGHT, "rgba(0,0,0,0.45)");
+
+    if (FB.resuming) {
+      FB.Draw.centerText(
+        FB.getResumeCountdown(),
+        FB.WIDTH / 2,
+        225,
+        72,
+        "#fff",
+      );
+      return;
+    }
+
+    FB.Draw.centerText("PAUSED", FB.WIDTH / 2, 215, 32, "#fff");
+    FB.Draw.centerText("Press P or Esc", FB.WIDTH / 2, 250, 14, "#fff");
   },
 };
