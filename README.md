@@ -12,10 +12,6 @@ Este repositório e um fork do projeto CrappyBird (clone de Flappy Bird em JavaS
 
 Este fork existe para apoiar o processo da disciplina, cujo foco e melhorar e otimizar um software existente, bem como reparar defeitos. Ao longo do semestre, as mudanças planejadas e implementadas neste projeto devem refletir os conceitos estudados em aula.
 
-As solicitações de mudança levantadas para o projeto estão documentadas em:
-
-- `docs/solicitacoes_mudanca.md`
-
 Observacao da disciplina: as solicitações podem evoluir ao longo das semanas conforme analise, prioridade e esforço estimado.
 
 ## Como executar localmente
